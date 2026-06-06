@@ -1,0 +1,80 @@
+{
+  "garments": {
+    "shirt": {
+      "front": {
+        "file": "shirt/front.png",
+        "anchors": {
+          "left_shoulder": [0.13, 0.07],
+          "right_shoulder": [0.87, 0.07],
+          "right_hip": [0.78, 0.94],
+          "left_hip": [0.22, 0.94]
+        }
+      },
+      "back": {
+        "file": "shirt/back.png",
+        "anchors": {
+          "left_shoulder": [0.13, 0.08],
+          "right_shoulder": [0.87, 0.08],
+          "right_hip": [0.78, 0.94],
+          "left_hip": [0.22, 0.94]
+        }
+      },
+      "left": {
+        "file": "shirt/left.png",
+        "anchors": {
+          "left_shoulder": [0.18, 0.08],
+          "right_shoulder": [0.82, 0.08],
+          "right_hip": [0.76, 0.94],
+          "left_hip": [0.24, 0.94]
+        }
+      },
+      "right": {
+        "file": "shirt/right.png",
+        "anchors": {
+          "left_shoulder": [0.18, 0.08],
+          "right_shoulder": [0.82, 0.08],
+          "right_hip": [0.76, 0.94],
+          "left_hip": [0.24, 0.94]
+        }
+      }
+    },
+    "trousers": {
+      "front": {
+        "file": "trousers/front.png",
+        "anchors": {
+          "left_hip": [0.13, 0.04],
+          "right_hip": [0.87, 0.04],
+          "right_ankle": [0.72, 0.98],
+          "left_ankle": [0.28, 0.98]
+        }
+      },
+      "back": {
+        "file": "trousers/back.png",
+        "anchors": {
+          "left_hip": [0.13, 0.04],
+          "right_hip": [0.87, 0.04],
+          "right_ankle": [0.72, 0.98],
+          "left_ankle": [0.28, 0.98]
+        }
+      },
+      "left": {
+        "file": "trousers/left.png",
+        "anchors": {
+          "left_hip": [0.20, 0.04],
+          "right_hip": [0.80, 0.04],
+          "right_ankle": [0.68, 0.98],
+          "left_ankle": [0.32, 0.98]
+        }
+      },
+      "right": {
+        "file": "trousers/right.png",
+        "anchors": {
+          "left_hip": [0.20, 0.04],
+          "right_hip": [0.80, 0.04],
+          "right_ankle": [0.68, 0.98],
+          "left_ankle": [0.32, 0.98]
+        }
+      }
+    }
+  }
+}

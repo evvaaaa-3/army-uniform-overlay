@@ -1,0 +1,21 @@
+venv/
+__pycache__/
+*.pyc
+
+# Keep outputs folder, ignore generated images/files
+outputs/*
+!outputs/.gitkeep
+
+# Keep captures folder if added later, ignore captured images
+captures/*
+!captures/.gitkeep
+
+assets_backup_checker_original/
+blender_assets/
+*.blend
+*.glb
+*.fbx
+*.obj
+
+.DS_Store
+.env
