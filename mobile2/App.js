@@ -8,7 +8,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import axios from 'axios';
 
-const FLASK_URL = 'http://10.53.25.54:5000';
+const FLASK_URL = 'http://127.0.0.1:5050';
 const { width } = Dimensions.get('window');
 
 function SplashScreen({ onNext }) {
@@ -148,14 +148,14 @@ function CameraScreen({ onCapture, onBack }) {
 
   return (
     <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
-      <CameraView ref={cameraRef} style={styles.camera} facing="front">
+      <CameraView ref={cameraRef} style={styles.camera} facing="back">
         <SafeAreaView style={styles.cameraUI}>
           <View style={styles.cameraTop}>
             <View style={styles.liveBadge}>
               <Text style={styles.liveText}>LIVE</Text>
             </View>
             <View style={styles.frontBadge}>
-              <Text style={styles.frontText}>FRONT</Text>
+              <Text style={styles.frontText}>BACK</Text>
             </View>
           </View>
           {countdown !== null && (
@@ -231,7 +231,7 @@ function ResultScreen({ image, onRetry }) {
         <TouchableOpacity style={styles.outlineBtn} onPress={onRetry}>
           <Text style={styles.outlineBtnText}>Try Again</Text>
         </TouchableOpacity>
-        <Text style={styles.privacy}>Photo auto-deletes from server in 60s</Text>
+        <Text style={styles.privacy}>Photo auto-deletes from server after demo expiry</Text>
       </Animated.View>
     </SafeAreaView>
   );
