@@ -5,10 +5,19 @@ __pycache__/
 # Keep outputs folder, ignore generated images/files
 outputs/*
 !outputs/.gitkeep
+!outputs/final/
+outputs/final/*
+!outputs/final/.gitkeep
+!outputs/debug/
+outputs/debug/*
+!outputs/debug/.gitkeep
 
 # Keep captures folder if added later, ignore captured images
 captures/*
 !captures/.gitkeep
+!captures/originals/
+captures/originals/*
+!captures/originals/.gitkeep
 
 assets_backup_checker_original/
 blender_assets/

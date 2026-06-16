@@ -14,6 +14,8 @@ from src.garments.asset_loader import GarmentLibrary
 from src.garments.view_selector import select_view
 from src.overlay.renderer import UniformRenderer
 from src.config.settings import ARMY_ASSET_DIR, VISIBILITY_THRESHOLD
+from src.tryon.photo_uniform_pipeline import PhotoUniformPipeline
+from src.utils.file_utils import ORIGINALS_DIR, ensure_photo_dirs, timestamped_path
 
 app = Flask(__name__)
 CORS(app)
@@ -24,10 +26,18 @@ detector = PoseDetector()
 body_mapper = BodyMapper(VISIBILITY_THRESHOLD)
 garment_library = GarmentLibrary(ARMY_ASSET_DIR)
 renderer = UniformRenderer(garment_library, body_mapper)
+photo_pipeline = PhotoUniformPipeline(
+    detector=detector,
+    garment_library=garment_library,
+    body_mapper=body_mapper,
+    renderer=renderer,
+    save_debug=True,
+)
 print("All models loaded. Server ready.")
 
 OUTPUT_DIR = "outputs"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+ensure_photo_dirs()
 
 def auto_delete(filepath, delay=60):
     """Delete file after delay seconds for privacy."""
@@ -40,7 +50,44 @@ def auto_delete(filepath, delay=60):
 
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "running"})
+    return jsonify({"status": "running", "photo_pipeline": "ready"})
+
+@app.route('/process-photo', methods=['POST'])
+def process_photo():
+    try:
+        if 'image' not in request.files:
+            return jsonify({
+                "success": False,
+                "message": "Upload an image file using multipart field name 'image'.",
+            }), 400
+
+        uploaded = request.files['image']
+        data = uploaded.read()
+        if not data:
+            return jsonify({"success": False, "message": "Uploaded image is empty."}), 400
+
+        np_arr = np.frombuffer(data, np.uint8)
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        if frame is None:
+            return jsonify({"success": False, "message": "Could not decode uploaded image."}), 400
+
+        original_path = timestamped_path(ORIGINALS_DIR, "upload", ".jpg")
+        if not cv2.imwrite(str(original_path), frame):
+            return jsonify({"success": False, "message": "Could not save uploaded original image."}), 500
+
+        result = photo_pipeline.process(original_path)
+        status = 200 if result.success else 400
+
+        return jsonify({
+            "success": result.success,
+            "message": result.message,
+            "original_image_path": str(original_path),
+            "output_image_path": result.output_path,
+            "debug_image_path": result.debug_path,
+        }), status
+
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 @app.route('/overlay', methods=['POST'])
 def overlay():
